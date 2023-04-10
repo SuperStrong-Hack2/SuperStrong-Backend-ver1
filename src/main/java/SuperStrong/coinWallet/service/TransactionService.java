@@ -86,13 +86,6 @@ public class TransactionService {
             ret_list.put("to_address", to_address);
             ret_list.put("validation", "valid input");
         }
-
-//        HashMap<String, Object> res_list = new HashMap<String, Object>()
-//        res_list.put("to_address", to_address);
-//        res_list.put("remain_amount", ret_list.get(0));
-//        res_list.put("calculated_gas", ret_list.get(1));
-//        res_list.put("send_amount", ret_list.get(2));
-//        res_list.put("coin_name", ret_list.get(3));
         return new JSONObject(ret_list);
     }
 
@@ -122,12 +115,16 @@ public class TransactionService {
                 double quote = 1500000;
                 String status = "send";
 
-//                Optional<Member> member = memberRepository.findById((String) jsonObject.get("id"));
-//                System.out.println(member.get().getMemberId());
-//                System.out.println(member.get().getPw());
-//
-//                String query4 = String.format("INSERT INTO history (status, member_id, interaction_id, coin_name, amount, quote, gas) VALUES ('%s', '%s', '%s', 'doge', 10, 160000, 1.5);", status, jsonObject.get("id"), jsonObject.get("coin"), coin, jsonObject.get("pub_address"));
-//                stmt1.executeUpdate(query4);
+                Member member = memberRepository.findByPubAddress((String) jsonObject.get("pub_address"));
+                String interaction_id = member.getMemberId();
+
+                String query4 = String.format("INSERT INTO history (status, member_id, interaction_id, coin_name, amount, quote, gas) VALUES ('%s', '%s', '%s', '%s', '%f', '%f', '%f');", status, jsonObject.get("id"), interaction_id, jsonObject.get("coin"), coin, quote, gas);
+                stmt1.executeUpdate(query4);
+
+                status = "receive";
+
+                String query5 = String.format("INSERT INTO history (status, member_id, interaction_id, coin_name, amount, quote, gas) VALUES ('%s', '%s', '%s', '%s', '%f', '%f', '%f');", status, interaction_id, jsonObject.get("id"), jsonObject.get("coin"), coin, quote, gas);
+                stmt1.executeUpdate(query5);
 
 
                 stmt1.close();
@@ -148,5 +145,4 @@ public class TransactionService {
         }
         return null;
     }
-
 }

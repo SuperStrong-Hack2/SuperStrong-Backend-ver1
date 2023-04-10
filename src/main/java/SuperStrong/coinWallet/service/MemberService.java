@@ -177,16 +177,18 @@ public class MemberService {
         return 1;
     }
 
-    public Object signup(HashMap<String, Object> data) {
-        System.out.println(data);
+    public Object signup(JSONObject jsonObject) {
+//        System.out.println(data);
         // TODO     0:코드발송, 1:id존재, 2:email존재, 3:phone_num존재, 4:ssn존재, 5:이전에 코드 발송
-        JSONObject jsonObject = new JSONObject(data);
+//        JSONObject jsonObject = new JSONObject(data);
+        System.out.println(jsonObject);
         HashMap<String, String> res = new HashMap<>();
 
         try {
             String query1 = String.format("SELECT EXISTS (SELECT id FROM member where id='%s') as success", jsonObject.get("id"));
             if(duplicate_checker(query1) == 0) {
                 res.put("res", "1");
+                res.put("key",(String) jsonObject.get("key"));
                 return new JSONObject(res);
             }
 
@@ -227,6 +229,7 @@ public class MemberService {
             conn.close();
 
             res.put("res", "0");
+
             return new JSONObject(res);
 
         } catch (Exception e){
@@ -237,9 +240,9 @@ public class MemberService {
     }
 
 
-    public Object signup_auth(HashMap<String, Object> data) {
+    public Object signup_auth(JSONObject jsonObject) {
         // TODO 가입 완료 후 member_tmp 테이블에 해당 데이터 삭제 필요
-        JSONObject jsonObject = new JSONObject(data);
+//        JSONObject jsonObject = new JSONObject(data);
         HashMap<String, String> res = new HashMap<>();
 
         try {
@@ -252,7 +255,7 @@ public class MemberService {
                 String query5 = String.format("INSERT INTO member(id, pw, email, phone_num, ssn) SELECT member_tmp.id, member_tmp.pw, member_tmp.email, member_tmp.phone_num, member_tmp.ssn FROM member_tmp WHERE member_tmp.code = '%s'", jsonObject.get("code"));
                 stmt1.executeUpdate(query5);
 
-                String private_key = create_key(16);
+                String private_key = create_key(32);
                 String pub_address = create_key(32);
 
                 String query6 = String.format("SELECT id FROM member_tmp WHERE code = '%s'", jsonObject.get("code"));
@@ -292,9 +295,6 @@ public class MemberService {
         }
         return null;
     }
-
-
-
 
 
     @Autowired

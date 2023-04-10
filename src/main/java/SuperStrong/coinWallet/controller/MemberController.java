@@ -23,34 +23,17 @@ public class MemberController {
     @Autowired
     MemberService memberService;
     @PostMapping("/api/register")
-    public Object register(@RequestBody HashMap<String, Object> data){
-        return memberService.signup(data);
+    public Object register(@RequestBody HashMap<String, Object> data) throws ParseException {
+        return encryption.getAES256encode(memberService.signup(encryption.getAES256decode(data)));
     }
 
     @PostMapping("/api/register/auth")
-    public Object register_auth(@RequestBody HashMap<String, Object> data){
-        return memberService.signup_auth(data);
+    public Object register_auth(@RequestBody HashMap<String, Object> data) throws ParseException {
+        return encryption.getAES256encode(memberService.signup_auth(encryption.getAES256decode(data)));
     }
 
     @PostMapping("/api/login")
     public Object login(@RequestBody HashMap<String, Object> data) throws ParseException {
         return encryption.getAES256encode(memberService.loginUser(encryption.getAES256decode(data)));
     }
-
-//    @PostMapping("/api/tokentest") // 토큰 유효성 체크 함수를 검사하는 것. 나중에 없앰
-//    public String testToken(@RequestBody HashMap<String, Object> data) {
-//        String token = (String) data.get("token");
-//        String pub_address = (String) data.get("pub_address");
-//        boolean isValid = JwtUtil.CheckTokenValid(token, pub_address);
-//        if (isValid) {
-//            System.out.println("Valid token");
-//            return "Valid token";
-//        } else {
-//            System.out.println("Invalid token");
-//            return "Invalid token";
-//        }
-//    }
-
-
-
 }
