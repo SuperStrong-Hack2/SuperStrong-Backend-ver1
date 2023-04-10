@@ -1,0 +1,38 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.10'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+}
+
+group = 'SuperStrong'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'mysql:mysql-connector-java'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.32'
+	implementation 'org.springframework:spring-context:5.3.9'
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+//	implementation 'org.springframework.boot:spring-boot-starter-security' //지혼자 로그인 페이지 형성함
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+	compileOnly 'javax.servlet:javax.servlet-api:4.0.1'	//@intercept
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor' //@intercept
+	implementation 'org.springframework.boot:spring-boot-starter-aop' //@intercept
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+	implementation 'com.google.code.gson:gson:2.8.9'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
