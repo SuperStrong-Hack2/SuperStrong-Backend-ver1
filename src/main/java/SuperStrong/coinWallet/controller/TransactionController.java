@@ -30,16 +30,19 @@ public class TransactionController {
 
     @PostMapping("/api/send")
     public Object register(@RequestParam HashMap<String, Object> data){
+        System.out.println("송금 진행");
         //return encryption.getAES256encode(transactionService.send(encryption.getAES256decode(data)));
-
         return transactionService.send(data);
     }
 
     @PostMapping("/api/send_input") //토큰 유효성 검사, 인터셉트 필요******
     public Object sendInput(@RequestBody HashMap<String, Object> data) {
+        System.out.println("송금 입력");
         return transactionService.calculate(data);
-    }
         //return encryption.getAES256encode(transaction.calculate(encryption.getAES256decode(data)));
+
+    }
+        
 
 
 }

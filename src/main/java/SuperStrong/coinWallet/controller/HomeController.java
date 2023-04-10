@@ -22,6 +22,7 @@ public class HomeController {
 
     @PostMapping("/api/main_asset") // id와 jwt 받아옴, jwt에 대한 유효성 검사 intercept 필요함
     public Object main_asset(@RequestBody HashMap<String, Object> data) {
+        System.out.println("홈 화면 자산 조회");
 //        System.out.println(data);
         return memberService.assetInfo(data);
 
@@ -29,6 +30,7 @@ public class HomeController {
 
     @PostMapping("/api/main_history")
     public Object main_history(@RequestBody HashMap<String, Object> data) {
+        System.out.println("홈 화면 거래 내역 조회");
 //        System.out.println(data);
         return memberService.historyInfo(data);
     }

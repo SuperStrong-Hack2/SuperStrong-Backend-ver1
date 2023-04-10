@@ -52,14 +52,14 @@ public class MemberService {
         } else {
             HashMap<String, Object> res_map = new HashMap<String, Object>();
             res_map.put("token", "login failed");
-            System.out.println("login fail");
+            System.out.println("login failed");
             return new JSONObject(res_map);
         }
     }
 
     public Object assetInfo(HashMap<String, Object> data) {
         String id = (String) data.get("id");
-
+        System.out.println("id : " + id + " 의 자산 정보를 조회합니다.");
         Optional<Member> member = memberRepository.findById(id);
         HashMap<String, Object> ret_asset = new HashMap<String, Object>();
         if (member.isPresent()) {
@@ -81,6 +81,7 @@ public class MemberService {
     public Object historyInfo(HashMap<String, Object> data) {
         JSONObject jsonObject = new JSONObject(data);
         String id = (String) data.get("id");
+        System.out.println("id : " + id + " 의 거래 내역을 조회합니다.");
 
         Optional<Member> optionalMember = memberRepository.findById(id);
         List<Object> ret_history = new ArrayList<>();

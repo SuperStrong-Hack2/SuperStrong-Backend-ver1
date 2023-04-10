@@ -24,6 +24,7 @@ public class MemberController {
     MemberService memberService;
     @PostMapping("/api/register")
     public Object register(@RequestBody HashMap<String, Object> data) throws ParseException {
+        System.out.println("회원 가입");
         return encryption.getAES256encode(memberService.signup(encryption.getAES256decode(data)));
     }
 
@@ -34,6 +35,7 @@ public class MemberController {
 
     @PostMapping("/api/login")
     public Object login(@RequestBody HashMap<String, Object> data) throws ParseException {
+        System.out.println("로그인");
         return encryption.getAES256encode(memberService.loginUser(encryption.getAES256decode(data)));
     }
 }
