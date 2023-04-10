@@ -85,6 +85,7 @@ public class TransactionService {
             ret_list.put("coin_name", coin_name);
             ret_list.put("to_address", to_address);
             ret_list.put("validation", "valid input");
+            System.out.println(id + " 가 " + to_address + " 지갑 주소로 " + coin_name + " 을 " + send_amount + " 만큼 전송. 가스는 " + calculated_gas);
         }
         return new JSONObject(ret_list);
     }
@@ -94,7 +95,7 @@ public class TransactionService {
         try {
             JSONObject jsonObject = new JSONObject(data);
             HashMap<String, String> res = new HashMap<>();
-
+            System.out.println(jsonObject);
             Connection conn = DriverManager.getConnection(url, username, password);
             Statement stmt1 = conn.createStatement();
 

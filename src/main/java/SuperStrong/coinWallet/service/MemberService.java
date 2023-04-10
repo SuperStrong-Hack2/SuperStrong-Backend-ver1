@@ -40,7 +40,7 @@ public class MemberService {
         String id = (String) jsonObject.get("id");
         String pw = (String) jsonObject.get("pw");
 
-        System.out.println("id: " + id + " pw: " + pw);
+        System.out.println("id: " + id + " 와 + "  + "pw: " + pw + " 로 로그인 시도");
         Optional<Member> member = memberRepository.findById(id);
         if (member.isPresent() && member.get().getPw().equals(pw)) {
             System.out.println(member.get().getMemberId());
